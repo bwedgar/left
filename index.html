@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<!-- bwedgar.github.io/PushToTelescope   -->
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="apple-touch-icon" href="launch3.png">
+  <link rel="apple-touch-startup-image" href="launch3.png">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://bwedgar.github.io/PushToTelescope" />
+
+  <title>Document</title>
+  <meta name="apple-mobile-web-app-title" content="Push To Telescope">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <script src="astromath.js"></script>
+  <script src="planets.js"></script>
+  <script src="celestialobjects.js"></script>
+  <script src="https://bwedgar.github.io/buttons/buttons.js"></script>
+  <!-- <script src="../buttons/buttons.js"></script> -->
+
+  <!-- <script src="sw.js"></script> -->
+
+</head>
+
+
+<body>
+
+
+  <script>
+
+
+    ready = () => {
+        document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
+
+        timeLastUpdated = new Date()
+
+
+        startMotion = () => {
+          DeviceOrientationEvent.requestPermission()
+            .then(response => {
+              if (response == 'granted') {
+                window.addEventListener('devicemotion', listener)
+                window.addEventListener('deviceorientation', listener2)
+              }
+            })
+            .catch(console.error)
+        }
+
+
+        timer = setInterval(updateObjects, 60000)
+
+
+        // functions for detecting and responding to telescope movement
+        listener = (e) => {
+          sensor = -e.accelerationIncludingGravity.x //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+          //sensor = (sensor + 6.9) * 6.4
+          //sensor = Math.round(sensor * 100) / 100;
+          alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
+          if (Math.abs(sensor - previousSensor) > 0.05) { //test if the sensor has changed
+            previousSensor = sensor
+            //when phone is 45 degrees clockwise altitude is 0, when phone is 45 anticlockwise altitude is 90 degrees
+            //adjSensor = //a + b * sensor
+            //  altitude = (sensor + 6.9) * 6.4-offsetInclination;
+            altitude = Math.round((sensor + 6.9) * 6.4)
+            altDev = altitude - alt - offsetInclination;
+          }
+        }
+  </script>
+</body>
+
+</html>
