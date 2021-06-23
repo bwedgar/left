@@ -24,11 +24,13 @@
 <body>
   left 4<BR>
   <div id="sensorDisplay"></div>
+  <button id="start">start</button>
   <br>
 
   <script>
     sensor = 0;
     sensorDisplay = document.getElementById("sensorDisplay");
+    startButton=document.getElementById("startButton");
 
     ready = () => {
       document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
@@ -37,7 +39,7 @@
 
 
       startMotion = () => {
-        alert("start");
+        //alert("start");
         DeviceOrientationEvent.requestPermission()
           .then(response => {
             if (response == 'granted') {
@@ -47,7 +49,6 @@
           .catch(console.error)
       }
 
-      startMotion();
 
       timer = setInterval(updateObjects, 60000)
 
@@ -65,6 +66,12 @@
              altDev = altitude - alt - offsetInclination;
              */
       }
+
+      startButton.addEventListener("click", () => {
+        startMotion();
+      })
+
+
     }
     ready();
   </script>
