@@ -39,7 +39,6 @@
 
 
       startMotion = () => {
-        alert("start");
         DeviceOrientationEvent.requestPermission()
           .then(response => {
             if (response == 'granted') {
@@ -56,7 +55,7 @@
 
       // functions for detecting and responding to telescope movement
       listener = (e) => {
-        sensor = -e.accelerationIncludingGravity.x //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+        sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
         sensorDisplay.innerHTML = sensor;
         /*
            alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
