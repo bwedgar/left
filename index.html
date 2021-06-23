@@ -17,22 +17,18 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <script src="astromath.js"></script>
-  <script src="planets.js"></script>
-  <script src="celestialobjects.js"></script>
-  <script src="https://bwedgar.github.io/buttons/buttons.js"></script>
-  <!-- <script src="../buttons/buttons.js"></script> -->
-
-  <!-- <script src="sw.js"></script> -->
-
+ 
 </head>
 
 
 <body>
-left 2<BR>
-
+left 3<BR>
+  <div id="sensorDisplay"></div>
+  <br>
+  
   <script>
-
+sensor=0;
+    sensorDispaly=getElementById("sensorDipslay");
 
     ready = () => {
         document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
@@ -41,6 +37,7 @@ left 2<BR>
 
 
         startMotion = () => {
+          alert("start");
           DeviceOrientationEvent.requestPermission()
             .then(response => {
               if (response == 'granted') {
@@ -58,16 +55,15 @@ startMotion();
         // functions for detecting and responding to telescope movement
         listener = (e) => {
           sensor = -e.accelerationIncludingGravity.x //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
-          //sensor = (sensor + 6.9) * 6.4
-          //sensor = Math.round(sensor * 100) / 100;
+          sensorDisplay.innerHTML=sensor;
+       /*
           alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
           if (Math.abs(sensor - previousSensor) > 0.05) { //test if the sensor has changed
             previousSensor = sensor
-            //when phone is 45 degrees clockwise altitude is 0, when phone is 45 anticlockwise altitude is 90 degrees
-            //adjSensor = //a + b * sensor
-            //  altitude = (sensor + 6.9) * 6.4-offsetInclination;
+          
             altitude = Math.round((sensor + 6.9) * 6.4)
             altDev = altitude - alt - offsetInclination;
+            */
           }
         }
     }
