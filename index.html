@@ -17,58 +17,56 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
- 
+
 </head>
 
 
 <body>
-left 4<BR>
+  left 4<BR>
   <div id="sensorDisplay"></div>
   <br>
-  
+
   <script>
-sensor=0;
-    sensorDisplay=getElementById("sensorDisplay");
+    sensor = 0;
+    sensorDisplay = document.getElementById("sensorDisplay");
 
     ready = () => {
-        document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
+      document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
 
-        timeLastUpdated = new Date()
-
-
-        startMotion = () => {
-          alert("start");
-          DeviceOrientationEvent.requestPermission()
-            .then(response => {
-              if (response == 'granted') {
-                window.addEventListener('devicemotion', listener)
-              }
-            })
-            .catch(console.error)
-        }
-
-startMotion();
-      
-        timer = setInterval(updateObjects, 60000)
+      timeLastUpdated = new Date()
 
 
-        // functions for detecting and responding to telescope movement
-        listener = (e) => {
-          sensor = -e.accelerationIncludingGravity.x //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
-          sensorDisplay.innerHTML=sensor;
-       /*
-          alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
-          if (Math.abs(sensor - previousSensor) > 0.05) { //test if the sensor has changed
-            previousSensor = sensor
-          
-            altitude = Math.round((sensor + 6.9) * 6.4)
-            altDev = altitude - alt - offsetInclination;
-            */
-          }
-        
+      startMotion = () => {
+        alert("start");
+        DeviceOrientationEvent.requestPermission()
+          .then(response => {
+            if (response == 'granted') {
+              window.addEventListener('devicemotion', listener)
+            }
+          })
+          .catch(console.error)
+      }
+
+      startMotion();
+
+      timer = setInterval(updateObjects, 60000)
+
+
+      // functions for detecting and responding to telescope movement
+      listener = (e) => {
+        sensor = -e.accelerationIncludingGravity.x //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+        sensorDisplay.innerHTML = sensor;
+        /*
+           alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
+           if (Math.abs(sensor - previousSensor) > 0.05) { //test if the sensor has changed
+             previousSensor = sensor
+
+             altitude = Math.round((sensor + 6.9) * 6.4)
+             altDev = altitude - alt - offsetInclination;
+             */
+      }
     }
-        ready();
-      
+    ready();
   </script>
 </body>
 
