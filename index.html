@@ -39,7 +39,7 @@
 
 
       startMotion = () => {
-        //alert("start");
+        alert("start");
         DeviceOrientationEvent.requestPermission()
           .then(response => {
             if (response == 'granted') {
@@ -48,6 +48,7 @@
           })
           .catch(console.error)
       }
+
 
 
       timer = setInterval(updateObjects, 60000)
