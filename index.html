@@ -57,6 +57,7 @@
         sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
         //every  10 milliseconds
         if ((Date.now().getMilliseconds() - timeAtStart.getMilliseconds()) > 10) {
+          sensorDisplay.innerHTML = sensor;
           distance = distance + (sensor - sensorAtStart);
           timeAtStart = Date.now();
           numberOfReadings++;
