@@ -22,7 +22,7 @@
 
 
 <body>
-  left 15<BR>
+  left 16<BR>
   <div id="sensorDisplay">9999</div>
   <button id="startButton">start</button>
   <br>
@@ -59,7 +59,7 @@
 
         //every  10 milliseconds
         if ((new Date().getTime() - timeAtStart) > 10) {
-          sensorDisplay.innerHTML = sensor;
+          //sensorDisplay.innerHTML = sensor;
           distance = distance + (sensor - sensorAtStart);
           timeAtStart = new Date().getTime();
           numberOfReadings=numberOfReadings+1;
