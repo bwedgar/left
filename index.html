@@ -22,61 +22,62 @@
 
 
 <body>
-  left 6<BR>
+  left 7<BR>
   <div id="sensorDisplay"></div>
   <button id="startButton">start</button>
   <br>
 
   <script>
     sensor = 0;
-    sensorAtStart=0;
+    sensorAtStart = 0;
     sensorDisplay = document.getElementById("sensorDisplay");
     startButton = document.getElementById("startButton");
     timeAtStart = Date.now();
     distance = 0;
 
     ready = () => {
-        document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
+      document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
 
 
 
 
-        startMotion = () => {
-          DeviceOrientationEvent.requestPermission()
-            .then(response => {
-              if (response == 'granted') {
-                window.addEventListener('devicemotion', listener)
-              }
-            })
-            .catch(console.error)
-        }
-
-
-
-        //  timer = setInterval(updateObjects, 60000)
-
-
-        // functions for detecting and responding to telescope movement
-        listener = (e) => {
-          sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
-          //every  10 milliseconds
-          if ((Date.now() - timeAtStart) % 10 == 0) {
-            distance = distance + (sensor - sensorAtStart);
-          }
-
-          //every  second
-          if ((Date.now() - timeAtStart) % 1000 == 0) {
-            sensorDisplay.innerHTML = distance;
-            sensorAtStart = sensor;
-          }
-
-          startButton.addEventListener("click", () => {
-            startMotion();
+      startMotion = () => {
+        DeviceOrientationEvent.requestPermission()
+          .then(response => {
+            if (response == 'granted') {
+              window.addEventListener('devicemotion', listener)
+            }
           })
+          .catch(console.error)
+      }
 
 
+
+      //  timer = setInterval(updateObjects, 60000)
+
+
+      // functions for detecting and responding to telescope movement
+      listener = (e) => {
+        sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+        //every  10 milliseconds
+        if ((Date.now() - timeAtStart) % 10 == 0) {
+          distance = distance + (sensor - sensorAtStart);
         }
-        ready();
+
+        //every  second
+        if ((Date.now() - timeAtStart) % 1000 == 0) {
+          sensorDisplay.innerHTML = distance;
+          sensorAtStart = sensor;
+        }
+      }
+
+      startButton.addEventListener("click", () => {
+        startMotion();
+      })
+
+
+    }
+    ready();
   </script>
 </body>
 
