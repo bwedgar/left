@@ -22,7 +22,7 @@
 
 
 <body>
-  left 12<BR>
+  left 13<BR>
   <div id="sensorDisplay">9999</div>
   <button id="startButton">start</button>
   <br>
@@ -55,6 +55,8 @@
 
       listener = (e) => {
         sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+      sensorDisplay.innerHTML = sensor;
+
         //every  10 milliseconds
         if ((Date.now().getMilliseconds() - timeAtStart.getMilliseconds()) > 10) {
           sensorDisplay.innerHTML = sensor;
