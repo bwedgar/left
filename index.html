@@ -29,51 +29,54 @@
 
   <script>
     sensor = 0;
+    sensorAtStart=0;
     sensorDisplay = document.getElementById("sensorDisplay");
-    startButton=document.getElementById("startButton");
+    startButton = document.getElementById("startButton");
+    timeAtStart = Date.now();
+    distance = 0;
 
     ready = () => {
-      document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
-
-      timeLastUpdated = new Date()
+        document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
 
 
-      startMotion = () => {
-        DeviceOrientationEvent.requestPermission()
-          .then(response => {
-            if (response == 'granted') {
-              window.addEventListener('devicemotion', listener)
-            }
+
+
+        startMotion = () => {
+          DeviceOrientationEvent.requestPermission()
+            .then(response => {
+              if (response == 'granted') {
+                window.addEventListener('devicemotion', listener)
+              }
+            })
+            .catch(console.error)
+        }
+
+
+
+        //  timer = setInterval(updateObjects, 60000)
+
+
+        // functions for detecting and responding to telescope movement
+        listener = (e) => {
+          sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
+          //every  10 milliseconds
+          if ((Date.now() - timeAtStart) % 10 == 0) {
+            distance = distance + (sensor - sensorAtStart);
+          }
+
+          //every  second
+          if ((Date.now() - timeAtStart) % 1000 == 0) {
+            sensorDisplay.innerHTML = distance;
+            sensorAtStart = sensor;
+          }
+
+          startButton.addEventListener("click", () => {
+            startMotion();
           })
-          .catch(console.error)
-      }
 
 
-
-    //  timer = setInterval(updateObjects, 60000)
-
-
-      // functions for detecting and responding to telescope movement
-      listener = (e) => {
-        sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
-        sensorDisplay.innerHTML = sensor;
-        /*
-           alt = Math.round(alt * 10) / 10 //alt is the altitude of the object
-           if (Math.abs(sensor - previousSensor) > 0.05) { //test if the sensor has changed
-             previousSensor = sensor
-
-             altitude = Math.round((sensor + 6.9) * 6.4)
-             altDev = altitude - alt - offsetInclination;
-             */
-      }
-
-      startButton.addEventListener("click", () => {
-        startMotion();
-      })
-
-
-    }
-    ready();
+        }
+        ready();
   </script>
 </body>
 
