@@ -22,8 +22,8 @@
 
 
 <body>
-  left 9<BR>
-  <div id="sensorDisplay"></div>
+  left 10<BR>
+  <div id="sensorDisplay">9999</div>
   <button id="startButton">start</button>
   <br>
 
@@ -34,7 +34,7 @@
     startButton = document.getElementById("startButton");
     timeAtStart = Date.now();
     distance = 0;
-    numberOfReadings=0;
+    numberOfReadings = 0;
 
     ready = () => {
       document.body.style.cssText = "color:red;background:black;font-size:4.5vw;font-family:verdana;"
@@ -56,17 +56,17 @@
       listener = (e) => {
         sensor = -e.accelerationIncludingGravity.z //sensor= 0 when vertical, -6.9 when clockwise 45 degrees, +6.9 when antoclockwise. +/- 10 when horizontal
         //every  10 milliseconds
-        if ((Date.now().getMilliseconds() - timeAtStart.getMilliseconds()) >10) {
+        if ((Date.now().getMilliseconds() - timeAtStart.getMilliseconds()) > 10) {
           distance = distance + (sensor - sensorAtStart);
-                  timeAtStart=Date.now();
-                  numberOfReadings=0;
+          timeAtStart = Date.now();
+          numberOfReadings++;
         }
 
         //every  second
-        if (numberOfReadings==100) {
+        if (numberOfReadings == 100) {
           sensorDisplay.innerHTML = distance;
           sensorAtStart = sensor;
-
+          numberOfReadings = 0;
         }
       }
 
