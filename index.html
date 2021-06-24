@@ -22,7 +22,7 @@
 
 
 <body>
-  left 10<BR>
+  left 12<BR>
   <div id="sensorDisplay">9999</div>
   <button id="startButton">start</button>
   <br>
@@ -60,7 +60,7 @@
           sensorDisplay.innerHTML = sensor;
           distance = distance + (sensor - sensorAtStart);
           timeAtStart = Date.now();
-          numberOfReadings++;
+          numberOfReadings=numberOfReadings+1;
         }
 
         //every  second
