@@ -22,7 +22,7 @@
 
 
 <body>
-  left 16<BR>
+  left 17<BR>
   <div id="sensorDisplay">9999</div>
   <button id="startButton">start</button>
   <br>
@@ -69,6 +69,7 @@
         if (numberOfReadings == 100) {
           sensorDisplay.innerHTML = distance;
           sensorAtStart = sensor;
+          distance=0;
           numberOfReadings = 0;
         }
       }
